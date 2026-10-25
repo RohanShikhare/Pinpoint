@@ -70,7 +70,7 @@ public class ActionItemService {
         return items.stream()
                 .filter(i -> status == null || i.getStatus() == status)
                 .filter(i -> priority == null || i.getPriority() == priority)
-                .filter(i -> overdue == null || !overdue || isOverdue(i, today))
+                .filter(i -> overdue == null || (overdue ? isOverdue(i, today) : !isOverdue(i, today)))
                 .map(i -> actionItemMapper.toResponse(
                         i,
                         i.getAnalysisId() == null ? null : sourceTitleByAnalysisId.get(i.getAnalysisId())

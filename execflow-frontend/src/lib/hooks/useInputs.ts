@@ -25,6 +25,7 @@ export function useCreateInput() {
     mutationFn: (payload: CreateInputPayload) => inputsApi.createInput(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: INPUTS_KEY });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
     },
   });
 }
@@ -35,6 +36,7 @@ export function useDeleteInput() {
     mutationFn: (id: string) => inputsApi.deleteInput(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: INPUTS_KEY });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
     },
   });
 }
