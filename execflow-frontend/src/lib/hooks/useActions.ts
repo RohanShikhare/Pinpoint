@@ -16,7 +16,10 @@ export function useCreateAction() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (payload: ActionItemPayload) => actionsApi.createAction(payload),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ACTIONS_KEY }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ACTIONS_KEY });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
+    },
   });
 }
 
@@ -25,7 +28,10 @@ export function useUpdateAction() {
   return useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: ActionItemPayload }) =>
       actionsApi.updateAction(id, payload),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ACTIONS_KEY }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ACTIONS_KEY });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
+    },
   });
 }
 
@@ -34,7 +40,10 @@ export function useUpdateActionStatus() {
   return useMutation({
     mutationFn: ({ id, status }: { id: string; status: ActionStatus }) =>
       actionsApi.updateActionStatus(id, status),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ACTIONS_KEY }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ACTIONS_KEY });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
+    },
   });
 }
 
@@ -42,6 +51,9 @@ export function useDeleteAction() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => actionsApi.deleteAction(id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ACTIONS_KEY }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ACTIONS_KEY });
+      queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
+    },
   });
 }
